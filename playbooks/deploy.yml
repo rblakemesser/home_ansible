@@ -1,0 +1,17 @@
+- hosts:
+    - common_rpi
+  user: pi
+  sudo: yes
+  vars:
+    - app_name: hello_flask
+    - repo_url: https://github.com/mattupstate/ansible-tutorial.git
+    - repo_remote: origin
+    - repo_version: master
+    - webapps_dir: /srv/webapps
+    - wsgi_file: wsgi.py
+    - wsgi_callable: app
+
+  tasks:
+    - name: deploy code from repository
+      action: git repo={{ repo_url }} dest={{ webapps_dir }}/{{ app_name }}/src remote={{ repo_remote }} version={{ repo_version }}
+

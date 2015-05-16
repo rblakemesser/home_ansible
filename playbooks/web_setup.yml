@@ -1,0 +1,22 @@
+- hosts:
+  - common_rpi
+  user: pi
+  sudo: yes
+  tasks:
+    - name: install common packages needed for python application development
+      action: apt pkg={{ item }} state=installed
+      with_items:
+        - python-dev
+        - git-core
+        - nginx
+        - python-pip
+    
+    - name: remove default nginx site
+      action: file path=/etc/nginx/sites-enabled/default state=absent
+    
+    - name: write nginx.conf
+      action: template src=../templates/nginx.conf.j2 dest=/etc/nginx/nginx.conf
+    
+    - name: create supervisord config folder
+      action: file dest=/etc/supervisor state=directory owner=root
+

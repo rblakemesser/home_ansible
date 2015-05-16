@@ -1,2 +1,6 @@
-raspberrypi.local
+[common_rpi]
+raspberrypi.local   ansible_connect=ssh ansible_ssh_user=pi ansible_sudo=True
+
+[rpis:children]
+common_rpi
 

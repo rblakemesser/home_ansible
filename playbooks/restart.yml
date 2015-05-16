@@ -1,0 +1,16 @@
+- hosts: "Restart all the servers!"
+  tags:
+    - restart
+  hosts:
+    - rpis
+  sudo: yes
+  tasks:
+    - name: restart server
+      command: shutdown -r now "Restarting pi!"
+
+- name: "Deploy simple git repo"
+  git:
+    - repo: git://foosball.example.org/path/to/repo.git
+    - dest: /srv/checkout
+    - version: master
+
