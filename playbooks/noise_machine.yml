@@ -1,0 +1,29 @@
+- name: "Turns this rpi into a noise machine"
+  hosts:
+    - noise_machine
+  sudo: yes
+  tasks:
+    - name: install supervisor
+      apt: name=supervisor state=latest
+
+    - name: install omxplayer
+      apt: name=omxplayer state=latest
+
+    - name: assets directory    
+      file: path=/home/pi/assets state=directory mode=0755 owner=pi group=pi
+
+    - name: place sound files
+      copy: src=../assets/{{ item }} dest=/home/pi/assets/{{ item }} owner=pi group=pi mode=0644
+      with_items:
+        - thunder.mp3
+
+    - name: supervisor config
+      template: src=../templates/{{ item }} dest=/etc/supervisor/conf.d/{{ item }} owner=root group=root mode=0644
+      with_items:
+        - noise_machine.conf
+
+    - name: restart supervisorctl program
+      supervisorctl: name=noise_machine state=restarted
+      ignore_errors: yes
+
+

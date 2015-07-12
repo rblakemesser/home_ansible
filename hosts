@@ -1,6 +1,3 @@
-[common_rpi]
+[noise_machine]
 raspberrypi.local   ansible_connect=ssh ansible_ssh_user=pi ansible_sudo=True
-
-[rpis:children]
-common_rpi
 
